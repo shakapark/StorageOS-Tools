@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: storageos-tools
+#  namespace: default
+  labels:
+    app: storageos-tools
+spec:
+#  replicas: 1
+  selector:
+    matchLabels:
+      app: storageos-tools
+  template:
+    metadata:
+      labels:
+        app: storageos-tools
+    spec:
+      containers:
+      - name: storageos-tools
+        image: shakapark/storageos-tools:dev
+        port:
+          - containerPort: 8080
+        env:
+          - name: ETCD_URLS
+            value: "http://51.91.134.159:2379"
+          - name: NODE_HOSTNAME
+            valueFrom: 
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: NODE_PATHFILE
+            value: /mnt/storageos/id
+        volumeMounts:
+          - mountPath: /mnt/storageos/id
+            name: storageos
+      volumes:
+        - name: storageos
+          hostPath:
+            path: /var/lib/storageos/state/id
+            type: File
