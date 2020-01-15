@@ -18,7 +18,7 @@ spec:
       containers:
       - name: storageos-tools
         image: shakapark/storageos-tools:dev
-        port:
+        ports:
           - containerPort: 8080
         env:
           - name: ETCD_URLS
