@@ -1,9 +1,10 @@
 package main
 
 import (
-	"StorageOS-Tools/src/config"
 	"net/http"
 	"strconv"
+
+	"github.com/shakapark/storageos-tools/src/config"
 
 	promlog "github.com/prometheus/common/log"
 )

@@ -1,6 +1,6 @@
 package main
 
-import "StorageOS-Tools/src/storageos"
+import "github.com/shakapark/storageos-tools/src/storageos"
 
 func checkNodeID(etcdURLs []string, hostname, filePath string) bool {
 	log.Infoln("Check Node ID")
