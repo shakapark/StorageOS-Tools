@@ -2,11 +2,9 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: storageos-tools
-#  namespace: default
   labels:
     app: storageos-tools
 spec:
-#  replicas: 1
   selector:
     matchLabels:
       app: storageos-tools
@@ -17,7 +15,7 @@ spec:
     spec:
       containers:
       - name: storageos-tools
-        image: shakapark/storageos-tools:dev
+        image: shakapark/storageos-tools:v0.1.0
         ports:
           - containerPort: 8080
         env:
@@ -32,6 +30,19 @@ spec:
         volumeMounts:
           - mountPath: /mnt/storageos/id
             name: storageos
+
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /check/node/id
+          initialDelaySeconds: 0
+
+        readinessProbe:
+          httpGet:
+            port: 8080
+            path: /check/node/id
+          initialDelaySeconds: 0
+
       volumes:
         - name: storageos
           hostPath:
