@@ -1,8 +1,8 @@
 package main
 
-import "github.com/shakapark/storageos-tools/src/storageos"
+import "StorageOS-Tools/src/storageos"
 
-func checkNodeID(etcdURLs []string, hostname /*, filePath*/, storageosEndpoint, storageosUsername, storageosPassword string) bool {
+func checkNodeID(etcdURLs []string, hostname, filePath, storageosEndpoint, storageosUsername, storageosPassword string) bool {
 	log.Infoln("Check Node ID")
 
 	clientETCD, err := storageos.NewClientETCD(etcdURLs, "", "")

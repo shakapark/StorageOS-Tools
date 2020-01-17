@@ -7,9 +7,9 @@ import (
 
 // CheckID CheckID configuration
 type CheckID struct {
-	etcdURLs []string
-	hostname string
-	// pathFile string
+	etcdURLs  []string
+	hostname  string
+	pathFile  string
 	storageos *StorageOSConfig
 }
 
@@ -26,11 +26,11 @@ func setcheckIDConfig() *CheckID {
 		return nil
 	}
 
-	// pathFile := os.Getenv("NODE_PATHFILE")
-	// if pathFile == "" {
-	// 	log.Fatalln("NODE_PATHFILE is empty")
-	// 	return nil
-	// }
+	pathFile := os.Getenv("NODE_PATHFILE")
+	if pathFile == "" {
+		log.Fatalln("NODE_PATHFILE is empty")
+		return nil
+	}
 
 	storageosCfg := getStorageOSConfig()
 	if storageosCfg == nil {
@@ -38,9 +38,9 @@ func setcheckIDConfig() *CheckID {
 	}
 
 	return &CheckID{
-		etcdURLs: etcdURLsStrings,
-		hostname: hostname,
-		// pathFile: pathFile,
+		etcdURLs:  etcdURLsStrings,
+		hostname:  hostname,
+		pathFile:  pathFile,
 		storageos: storageosCfg,
 	}
 
@@ -57,9 +57,9 @@ func (cid *CheckID) GetHostname() string {
 }
 
 // GetPathFile Return ETCD Urls of CheckID configuration
-// func (cid *CheckID) GetPathFile() string {
-// 	return cid.pathFile
-// }
+func (cid *CheckID) GetPathFile() string {
+	return cid.pathFile
+}
 
 // GetStorageOSConf Return ETCD Urls of CheckID configuration
 func (cid *CheckID) GetStorageOSConf() *StorageOSConfig {
