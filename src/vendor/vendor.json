@@ -93,16 +93,28 @@
 			"revisionTime": "2019-10-14T06:15:17Z"
 		},
 		{
-			"checksumSHA1": "629U0jgw3w2oPXzZbBEDI7EXUlA=",
-			"path": "github.com/golang/protobuf/proto",
-			"revision": "9f81198da99b79e14d70ca2c3cc1bbe44c6e69b6",
-			"revisionTime": "2018-06-16T23:00:25Z"
+			"checksumSHA1": "CtF4imOJ8KkjAAEQodM5a7kY5OU=",
+			"path": "github.com/golang/protobuf/jsonpb",
+			"revision": "4e55bbcbfaa105a596caba5bbc20d392806beda9",
+			"revisionTime": "2020-01-12T01:27:37Z"
 		},
 		{
-			"checksumSHA1": "DNWHEf2/4si/ausyXSub1vca0EU=",
+			"checksumSHA1": "78dam9bgu36kpCiQPsy5ni3s1cs=",
+			"path": "github.com/golang/protobuf/jsonpb/jsonpb_test_proto",
+			"revision": "4e55bbcbfaa105a596caba5bbc20d392806beda9",
+			"revisionTime": "2020-01-12T01:27:37Z"
+		},
+		{
+			"checksumSHA1": "i+qe0+yssgxVBv8NEw9hBRH2UsY=",
+			"path": "github.com/golang/protobuf/proto",
+			"revision": "4e55bbcbfaa105a596caba5bbc20d392806beda9",
+			"revisionTime": "2020-01-12T01:27:37Z"
+		},
+		{
+			"checksumSHA1": "cQvjaQ6YsQ2s/QOmJeSGMjbyLhU=",
 			"path": "github.com/golang/protobuf/proto/proto3_proto",
-			"revision": "9f81198da99b79e14d70ca2c3cc1bbe44c6e69b6",
-			"revisionTime": "2018-06-16T23:00:25Z"
+			"revision": "4e55bbcbfaa105a596caba5bbc20d392806beda9",
+			"revisionTime": "2020-01-12T01:27:37Z"
 		},
 		{
 			"checksumSHA1": "xE2Ma/RHS13RvxYygLhRnM7pbWc=",
@@ -135,10 +147,22 @@
 			"revisionTime": "2018-06-16T23:00:25Z"
 		},
 		{
+			"checksumSHA1": "RT/PGRMtH/yBCbIJfZftaz5yc3M=",
+			"path": "github.com/golang/protobuf/ptypes/struct",
+			"revision": "4e55bbcbfaa105a596caba5bbc20d392806beda9",
+			"revisionTime": "2020-01-12T01:27:37Z"
+		},
+		{
 			"checksumSHA1": "FdeygjOuyR2p5v9b0kNOtzfpjS4=",
 			"path": "github.com/golang/protobuf/ptypes/timestamp",
 			"revision": "9f81198da99b79e14d70ca2c3cc1bbe44c6e69b6",
 			"revisionTime": "2018-06-16T23:00:25Z"
+		},
+		{
+			"checksumSHA1": "KlQCb83HC090bojw4ofNDxn2nho=",
+			"path": "github.com/golang/protobuf/ptypes/wrappers",
+			"revision": "4e55bbcbfaa105a596caba5bbc20d392806beda9",
+			"revisionTime": "2020-01-12T01:27:37Z"
 		},
 		{
 			"checksumSHA1": "fuGCtI1ZIqx2umKV7OcPt9tDHmY=",
