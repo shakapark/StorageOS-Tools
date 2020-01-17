@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: storageos-tools
-        image: shakapark/storageos-tools:v0.1.2
+        image: shakapark/storageos-tools:dev-0.2
         ports:
           - containerPort: 8080
         env:
