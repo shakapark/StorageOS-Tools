@@ -2,7 +2,7 @@ package main
 
 import "github.com/shakapark/storageos-tools/src/storageos"
 
-func checkNodeID(etcdURLs []string, hostname, filePath string) bool {
+func checkNodeID(etcdURLs []string, hostname /*, filePath*/, storageosEndpoint, storageosUsername, storageosPassword string) bool {
 	log.Infoln("Check Node ID")
 
 	clientETCD, err := storageos.NewClientETCD(etcdURLs, "", "")
@@ -28,7 +28,8 @@ func checkNodeID(etcdURLs []string, hostname, filePath string) bool {
 
 	if nodeIDetcd != nodeIDfile {
 		log.Infoln("Ids different, change it...")
-		err := storageos.ReplaceFileID(filePath, nodeIDetcd)
+		// err := storageos.ReplaceFileID(filePath, nodeIDetcd)
+		err := storageos.DeleteStorageOSNode(nodeIDetcd, storageosEndpoint, storageosUsername, storageosPassword)
 		if err != nil {
 			log.Errorln("Errors Writing new ID: ", err)
 			return false

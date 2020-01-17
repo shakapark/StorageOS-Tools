@@ -17,7 +17,9 @@ func init() {
 
 func checkNodeIDHandler(w http.ResponseWriter, r *http.Request) {
 	cfg := config.GetConfig().GetCheckIDConfig()
-	success := checkNodeID(cfg.GetEtcdURLs(), cfg.GetHostname(), cfg.GetPathFile())
+	success := checkNodeID(cfg.GetEtcdURLs(), cfg.GetHostname(), /* cfg.GetPathFile(),*/
+		cfg.GetStorageOSConf().GetEndpoint(), cfg.GetStorageOSConf().GetUsername(),
+		cfg.GetStorageOSConf().GetPassword())
 	if success {
 		w.WriteHeader(http.StatusOK)
 	} else {
