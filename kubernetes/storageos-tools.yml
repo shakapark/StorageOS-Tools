@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: storageos-tools
+  namespace: storageos-operator
   labels:
     app: storageos-tools
 spec:
@@ -27,6 +28,18 @@ spec:
                 fieldPath: spec.nodeName
           - name: NODE_PATHFILE
             value: /mnt/storageos/id
+          - name: STORAGEOS_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: apiUsername
+                name: storageos-api
+          - name: STORAGEOS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: apiPassword
+                name: storageos-api
+          - name: STORAGEOS_ENDPOINT
+            value: storageos.storageos:5705
         volumeMounts:
           - mountPath: /mnt/storageos/id
             name: storageos
