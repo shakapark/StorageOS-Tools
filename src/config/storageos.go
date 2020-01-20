@@ -17,7 +17,7 @@ func getStorageOSConfig() *StorageOSConfig {
 
 	username := os.Getenv("STORAGEOS_USERNAME")
 	if username == "" {
-		username = "8080"
+		username = "storageos"
 	}
 
 	password := os.Getenv("STORAGEOS_PASSWORD")

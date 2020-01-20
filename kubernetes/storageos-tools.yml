@@ -22,7 +22,7 @@ spec:
           - name: ETCD_URLS
             value: "http://51.91.134.159:2379"
           - name: NODE_HOSTNAME
-            valueFrom: 
+            valueFrom:
               fieldRef:
                 fieldPath: spec.nodeName
           - name: NODE_PATHFILE
