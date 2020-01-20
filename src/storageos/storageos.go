@@ -23,7 +23,7 @@ func DeleteStorageOSNode(oldID, nodes, username, password string) error {
 		return errors.New("Error creating StorageOS cli: " + err.Error())
 	}
 	ops := types.DeleteOptions{
-		ID: oldID,
+		Name: oldID,
 	}
 	err = client.NodeDelete(ops)
 	return errors.New("Error deleting node: " + err.Error())
