@@ -1,6 +1,8 @@
 package storageos
 
 import (
+	"errors"
+
 	storageos "github.com/storageos/go-api"
 	"github.com/storageos/go-api/types"
 )
@@ -18,11 +20,11 @@ func newStorageOSClient(nodes, username, password string) (*storageos.Client, er
 func DeleteStorageOSNode(oldID, nodes, username, password string) error {
 	client, err := newStorageOSClient(nodes, username, password)
 	if err != nil {
-		return err
+		return errors.New("Error creating StorageOS cli: " + err.Error())
 	}
 	ops := types.DeleteOptions{
 		ID: oldID,
 	}
 	err = client.NodeDelete(ops)
-	return err
+	return errors.New("Error deleting node: " + err.Error())
 }
