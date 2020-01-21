@@ -14,25 +14,25 @@ func checkNodeID(etcdURLs []string, hostname, filePath, storageosEndpoint, stora
 
 	nodeIDetcd, err := storageos.GetETCDNodeID(clientETCD, hostname)
 	if err != nil {
-		log.Errorln("Errors NodeID from Etcd: ", err)
+		log.Errorln("Errors NodeID from Etcd:", err)
 		return false
 	}
-	log.Infoln("NodeID of", hostname, ":", nodeIDetcd)
+	log.Infoln("NodeID of", hostname, "in etcd:", nodeIDetcd)
 
 	nodeIDfile, err := storageos.GetFileID(filePath)
 	if err != nil {
-		log.Errorln("Errors NodeID from File: ", err)
+		log.Errorln("Errors NodeID from File:", err)
 		return false
 	}
-	log.Infoln("NodeID of file", nodeIDfile)
+	log.Infoln("NodeID of", hostname, "in file:", nodeIDfile)
 
 	if nodeIDetcd != nodeIDfile {
 		log.Infoln("Ids different, change it...")
 		// err := storageos.ReplaceFileID(filePath, nodeIDetcd)
-		err := storageos.DeleteStorageOSNode(hostname, storageosEndpoint, storageosUsername, storageosPassword)
+		err := storageos.DeleteStorageOSNode(nodeIDetcd, storageosEndpoint, storageosUsername, storageosPassword)
 		// err := storageos.ListeStorageOSNode(hostname, storageosEndpoint, storageosUsername, storageosPassword)
 		if err != nil {
-			log.Errorln("Errors Writing new ID: ", err)
+			log.Errorln("Errors Writing new ID:", err)
 			return false
 		}
 	} else {
