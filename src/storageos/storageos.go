@@ -26,7 +26,7 @@ func DeleteStorageOSNode(oldID, nodes, username, password string) error {
 	}
 	ops := types.DeleteOptions{
 		Name:      oldID,
-		Namespace: "storageos",
+		Namespace: "default",
 		Force:     true,
 		Context:   context.Background(),
 	}
