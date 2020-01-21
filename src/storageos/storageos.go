@@ -1,6 +1,7 @@
 package storageos
 
 import (
+	"context"
 	"errors"
 	"fmt"
 
@@ -24,10 +25,17 @@ func DeleteStorageOSNode(oldID, nodes, username, password string) error {
 		return errors.New("Error creating StorageOS cli: " + err.Error())
 	}
 	ops := types.DeleteOptions{
-		Name: oldID,
+		Name:      oldID,
+		Namespace: "storageos",
+		Force:     true,
+		Context:   context.Background(),
 	}
 	err = client.NodeDelete(ops)
-	return errors.New("Error deleting node: " + err.Error())
+	if err != nil {
+		return errors.New("Error deleting node: " + err.Error())
+	}
+
+	return nil
 }
 
 // ListeStorageOSNode Delete Old Node ID in StorageOS API
