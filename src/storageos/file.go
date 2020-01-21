@@ -25,7 +25,7 @@ func ReplaceFileID(path, newID string) error {
 	}
 	defer f.Close()
 
-	_, err = f.WriteString(newID + "\n")
+	_, err = f.WriteString(newID)
 	if err != nil {
 		return errors.New("Writing File: " + error.Error(err))
 	}
