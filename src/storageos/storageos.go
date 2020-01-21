@@ -10,7 +10,7 @@ import (
 )
 
 func newStorageOSClient(nodes, username, password string) (*storageos.Client, error) {
-	cli, err := storageos.NewClient(nodes)
+	cli, err := storageos.NewVersionedClient(nodes, "1")
 	if err != nil {
 		return nil, err
 	}
