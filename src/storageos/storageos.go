@@ -36,10 +36,16 @@ func ListeStorageOSNode(oldID, nodes, username, password string) error {
 	if err != nil {
 		return errors.New("Error creating StorageOS cli: " + err.Error())
 	}
+
+	err = client.Ping()
+	if err != nil {
+		return errors.New("Error ping: " + err.Error())
+	}
+
 	ops := types.ListOptions{
-		FieldSelector: "",
-		LabelSelector: "",
-		Namespace:     "storageos",
+		// FieldSelector: "",
+		// LabelSelector: "",
+		Namespace: "storageos",
 	}
 	listNodes, err := client.NodeList(ops)
 	if err != nil {
