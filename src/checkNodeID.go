@@ -29,7 +29,8 @@ func checkNodeID(etcdURLs []string, hostname, filePath, storageosEndpoint, stora
 	if nodeIDetcd != nodeIDfile {
 		log.Infoln("Ids different, change it...")
 		// err := storageos.ReplaceFileID(filePath, nodeIDetcd)
-		err := storageos.DeleteStorageOSNode(nodeIDetcd, storageosEndpoint, storageosUsername, storageosPassword)
+		// err := storageos.DeleteStorageOSNode(nodeIDetcd, storageosEndpoint, storageosUsername, storageosPassword)
+		err := storageos.ListeStorageOSNode(nodeIDetcd, storageosEndpoint, storageosUsername, storageosPassword)
 		if err != nil {
 			log.Errorln("Errors Writing new ID: ", err)
 			return false
