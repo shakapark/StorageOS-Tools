@@ -1,7 +1,6 @@
 package storageos
 
 import (
-	"context"
 	"errors"
 	"fmt"
 
@@ -40,7 +39,7 @@ func ListeStorageOSNode(oldID, nodes, username, password string) error {
 	ops := types.ListOptions{
 		FieldSelector: "",
 		LabelSelector: "",
-		Context:       context.Background(),
+		Namespace:     "storageos",
 	}
 	listNodes, err := client.NodeList(ops)
 	if err != nil {
