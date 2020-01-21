@@ -53,7 +53,7 @@ func GetETCDNodeID(c *clientv3.Client, hostname string) (string, error) {
 	}
 
 	if len(node.Kvs) == 0 {
-		return "", errors.New("Node" + hostname + "don't exist in etcd")
+		return "", errors.New("Node " + hostname + " don't exist in etcd")
 	}
 
 	var tmp nameIndex
