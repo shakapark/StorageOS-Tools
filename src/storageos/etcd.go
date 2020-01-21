@@ -52,6 +52,10 @@ func GetETCDNodeID(c *clientv3.Client, hostname string) (string, error) {
 		return "", errors.New("Can't get ETCD key: " + error.Error(err))
 	}
 
+	if len(node.Kvs) == 0 {
+		return "", errors.New("Node" + hostname + "don't exist in etcd")
+	}
+
 	var tmp nameIndex
 	err = json.Unmarshal([]byte(node.Kvs[0].Value), &tmp)
 	if err != nil {
