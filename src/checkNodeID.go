@@ -32,7 +32,7 @@ func checkNodeID(etcdURLs []string, hostname, filePath, storageosEndpoint, stora
 		err := storageos.DeleteStorageOSNode(nodeIDetcd, storageosEndpoint, storageosUsername, storageosPassword)
 		// err := storageos.ListeStorageOSNode(hostname, storageosEndpoint, storageosUsername, storageosPassword)
 		if err != nil {
-			log.Errorln("Errors Writing new ID:", err)
+			log.Errorln("Errors Delete old ID:", err)
 			return false
 		}
 	} else {
