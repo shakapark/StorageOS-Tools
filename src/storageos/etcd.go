@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"os"
 	"time"
 
 	"go.etcd.io/etcd/clientv3"
@@ -13,6 +12,16 @@ import (
 var (
 	etcdKeyPrefix = "storageos/nameidx/nodes/"
 )
+
+type nameIndex struct {
+	Prefix string `json:"prefix"`
+	Key    string `json:"key"`
+	ID     string `json:"objectID"`
+}
+
+func (ni *nameIndex) getID() string {
+	return ni.ID
+}
 
 // NewClientETCD Create ETCD Client Object
 func NewClientETCD(baseURLs []string, username, password string) (*clientv3.Client, error) {
@@ -43,6 +52,10 @@ func GetETCDNodeID(c *clientv3.Client, hostname string) (string, error) {
 		return "", errors.New("Can't get ETCD key: " + error.Error(err))
 	}
 
+	if len(node.Kvs) == 0 {
+		return "", errors.New("Node " + hostname + " don't exist in etcd")
+	}
+
 	var tmp nameIndex
 	err = json.Unmarshal([]byte(node.Kvs[0].Value), &tmp)
 	if err != nil {
@@ -50,41 +63,4 @@ func GetETCDNodeID(c *clientv3.Client, hostname string) (string, error) {
 	}
 
 	return (&tmp).getID(), nil
-}
-
-// GetFileID Get NodeID in local file
-func GetFileID(path string) (string, error) {
-	f, err := os.Open(path)
-	if err != nil {
-		return "", errors.New("Opening File: " + error.Error(err))
-	}
-	defer f.Close()
-
-	b1 := make([]byte, 64)
-	n1, err := f.Read(b1)
-	if err != nil {
-		return "", errors.New("Reading File: " + error.Error(err))
-	}
-
-	if b1[n1-1] == 10 {
-		b1 = b1[:(n1 - 1)]
-	}
-
-	return string(b1), nil
-}
-
-// ReplaceFileID Replace ID in file
-func ReplaceFileID(path, newID string) error {
-	f, err := os.Create(path)
-	if err != nil {
-		return errors.New("Opening File: " + error.Error(err))
-	}
-	defer f.Close()
-
-	_, err = f.WriteString(newID + "\n")
-	if err != nil {
-		return errors.New("Writing File: " + error.Error(err))
-	}
-
-	return nil
 }

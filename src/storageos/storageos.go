@@ -2,89 +2,59 @@ package storageos
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
-	"os"
-	"time"
+	"fmt"
 
-	"go.etcd.io/etcd/clientv3"
+	storageos "github.com/storageos/go-api"
+	"github.com/storageos/go-api/types"
 )
 
-var (
-	etcdKeyPrefix = "storageos/nameidx/nodes/"
-)
-
-// NewClientETCD Create ETCD Client Object
-func NewClientETCD(baseURLs []string, username, password string) (*clientv3.Client, error) {
-	cfg := clientv3.Config{
-		Endpoints:   baseURLs,
-		DialTimeout: 5 * time.Second,
-		// TLS: ,
-		// Username:  username,
-		// Password:  password,
-	}
-
-	c, err := clientv3.New(cfg)
+func newStorageOSClient(nodes, username, password string) (*storageos.Client, error) {
+	cli, err := storageos.NewVersionedClient(nodes, "1")
 	if err != nil {
 		return nil, err
 	}
-
-	return c, nil
+	cli.SetAuth(username, password)
+	return cli, nil
 }
 
-// GetETCDNodeID Get NodeID in ETCD with Hostname
-func GetETCDNodeID(c *clientv3.Client, hostname string) (string, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	kv := clientv3.NewKV(c)
-	node, err := kv.Get(ctx, etcdKeyPrefix+hostname)
+// DeleteStorageOSNode Delete Old Node ID in StorageOS API
+func DeleteStorageOSNode(oldID, nodes, username, password string) error {
+	client, err := newStorageOSClient(nodes, username, password)
 	if err != nil {
-		return "", errors.New("Can't get ETCD key: " + error.Error(err))
+		return errors.New("Error creating StorageOS cli: " + err.Error())
+	}
+	ops := types.DeleteOptions{
+		Name:      oldID,
+		Namespace: "",
+		Force:     true,
+		Context:   context.Background(),
+	}
+	err = client.NodeDelete(ops)
+	if err != nil {
+		return errors.New("Error deleting node: " + err.Error())
 	}
 
-	var tmp nameIndex
-	err = json.Unmarshal([]byte(node.Kvs[0].Value), &tmp)
-	if err != nil {
-		return "", errors.New("Parsing Json: " + error.Error(err))
-	}
-
-	return (&tmp).getID(), nil
+	return nil
 }
 
-// GetFileID Get NodeID in local file
-func GetFileID(path string) (string, error) {
-	f, err := os.Open(path)
+// ListeStorageOSNode Delete Old Node ID in StorageOS API
+func ListeStorageOSNode(oldID, nodes, username, password string) error {
+	client, err := newStorageOSClient(nodes, username, password)
 	if err != nil {
-		return "", errors.New("Opening File: " + error.Error(err))
+		return errors.New("Error creating StorageOS cli: " + err.Error())
 	}
-	defer f.Close()
 
-	b1 := make([]byte, 64)
-	n1, err := f.Read(b1)
+	ops := types.ListOptions{
+		// FieldSelector: "",
+		// LabelSelector: "",
+		// Namespace: "storageos",
+	}
+	listNodes, err := client.NodeList(ops)
 	if err != nil {
-		return "", errors.New("Reading File: " + error.Error(err))
+		return errors.New("Error list StorageOS nodes: " + err.Error())
 	}
 
-	if b1[n1-1] == 10 {
-		b1 = b1[:(n1 - 1)]
-	}
-
-	return string(b1), nil
-}
-
-// ReplaceFileID Replace ID in file
-func ReplaceFileID(path, newID string) error {
-	f, err := os.Create(path)
-	if err != nil {
-		return errors.New("Opening File: " + error.Error(err))
-	}
-	defer f.Close()
-
-	_, err = f.WriteString(newID + "\n")
-	if err != nil {
-		return errors.New("Writing File: " + error.Error(err))
-	}
-
+	fmt.Println(listNodes)
 	return nil
 }
